@@ -65,10 +65,10 @@
         }
     };
 	
-	sck.fn.bgColor = function(str) {
+	sck.fn.css = function(str) {
         if (str) {
             return this.each(function() {
-                this.style.backgroundColor = str;
+                this.style.cssText += str;
             });
         }
     };
