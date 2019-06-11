@@ -12,7 +12,7 @@
         this.nodes = [];
 
         // HTMLElements and NodeLists are wrapped in nodes array
-        if (selector instanceof HTMLElement || selector instanceof NodeList) {
+        if (selector instanceof HTMLElement || selector instanceof NodeList || selector === document ) {
             this.nodes = selector.length > 1 ? [].slice.call(selector) : [selector];
         }
         else if (typeof selector === 'string') {
