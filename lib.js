@@ -1,15 +1,17 @@
 (function(window, undefined) {
 
 
-    function sck(selector) {
+    function S(selector) {
 
-        if (!(this instanceof sck)) {
-            return new sck(selector);
+        if (!(this instanceof S)) {
+            return new S(selector);
         }
 
         this.length = 0;
 
         this.nodes = [];
+
+		
 
         // HTMLElements and NodeLists are wrapped in nodes array
         if (selector instanceof HTMLElement || selector instanceof NodeList || selector === document ) {
@@ -32,32 +34,66 @@
         div.innerHTML = html;
         return div.firstChild;
     }
+	
+	function getParents(el) {
+
+    var parents = [];
+    var p = el.parentNode;
+    
+    while (p !== document) {
+        var o = p;
+        parents.push(o);
+        p = o.parentNode;
+    }
+	parents.push(document)
+    
+    return parents;
+	}
+		
 
 
     // Methods
-    sck.fn = sck.prototype;
+    S.fn = S.prototype;
 
-    sck.fn.each = function(callback) {
+    S.fn.each = function(callback) {
         for (var i = 0; i < this.nodes.length; i++) {
             callback.call(this.nodes[i], this, i);
         }
         return this;
     };
+	
+	S.fn.parents = function(selector = '*') {
+		
+		var parentNodes  = new Set()
+		
+        for (var i = 0; i < this.nodes.length; i++) {
+			var nodes = getParents(this.nodes[i])			
+			for (var z = 0; z < nodes.length; z++) {	
+				parentNodes.add(nodes[z])		
+			}
+        }
 
-    sck.fn.addClass = function(classes) {
+		this.nodes = [].slice.call(document.querySelectorAll(selector)).filter(value => [...parentNodes].includes(value));
+		
+		
+        return this;
+    };
+		
+
+    S.fn.addClass = function(classes) {
         return this.each(function() {
             this.className += ' ' + classes;
         });
     };
 
-    sck.fn.removeClass = function(className) {
+    S.fn.removeClass = function(className) {
         return this.each(function() {
             this.className = this.className.replace(new RegExp('\\b' + className + '\\b', 'g'), '');
         });
     };
 
 
-    sck.fn.text = function(str) {
+    S.fn.text = function(str) {
         if (str) {
             return this.each(function() {
                 this.innerText = str;
@@ -65,20 +101,21 @@
         }
     };
 	
-	sck.fn.css = function(str) {
+	S.fn.css = function(str) {
         if (str) {
             return this.each(function() {
                 this.style.cssText += str;
             });
         }
     };
+	
 
-    sck.fn.on = function(name, handler) {
+    S.fn.on = function(name, handler) {
         return this.each(function() {
             this.addEventListener(name, handler, false);
         });
     };
 
-    window.sck = sck;
+    window.S = S;
 
 })(window);

@@ -4,9 +4,55 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>Untitled Document</title>
 		<script src="lib.js"></script>
+		
+
+		
+		<style>
+.ancestors * { 
+  display: block;
+  border: 2px solid lightgrey;
+  color: lightgrey;
+  padding: 5px;
+  margin: 15px;
+}
+</style>
+		
 	</head>
+	
+	
 
-	<body>
+	<body class="ancestors">
+	
+	
+	  <div style="width:500px;">div (great-grandparent)
+    <ul>ul (grandparent)  
+      <li>li (direct parent)
+        <span>span</span>
+      </li>
+    </ul>   
+  </div>
+  
+  	  <div style="width:500px;">div (great-grandparent)
+    <ul>ul (grandparent)  
+      <li>li (direct parent)
+        <span>span</span>
+      </li>
+    </ul>   
+  </div>
+  
+      <ul>ul (grandparent)  
+      <li>li (direct parent)
+        <span>span</span>
+      </li>
+    </ul>  
+	
+	
+	      <ul>ul (grandparent)  
+      <li>li (direct parent)
+        <span>span</span>
+      </li>
+    </ul>  
+	
 		
 		<p>click me</p>
 		
@@ -16,19 +62,26 @@
 		
 		<p>click me</p>
 
-		<script>
+				<script>
 
-			sck('p').on("click",function(){
-				sck(this).css("background-color:green").text("selçuk").css("font-size:34px"); 
-			});
 			
-			sck(document).on("keypress",function(){
-				alert(" 1 pressed");
-			});
+				S('p,span').on("click",function(){
+					S(this).css("background-color:green").text("selçuk").css("font-size:34px"); 
+				});
 			
-			sck(document).on("keypress",function(){
-				alert(" 2 pressed");
-			});
+				S(document).on("keypress",function(){
+					alert(" 1 pressed");
+				});
+			
+				S(document).on("keypress",function(){
+					alert(" 2 pressed");
+				});
+			
+				S('span').parents('div').css("border: 2px solid red");
+			
+				
+
+
  
 		</script>
 
